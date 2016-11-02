@@ -4,6 +4,7 @@ callPackage = pkgs.lib.callPackageWith (pkgs // support // allContracts // allCo
 self = rec { # use one line only to insert a component (utils/new_component.py sorts this list)
   workbench_nand = callPackage ./workbench/nand {};
   workbench_test = callPackage ./workbench/test {};
+  workbench_test_encrypt = callPackage ./workbench/test/encrypt {};
 }; # use one line only to insert a component (utils/new_component.py sorts this list)
 in
 self
