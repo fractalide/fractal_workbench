@@ -1,3 +1,4 @@
+# frac_workbench
 ## Fractalide Workbench
 
 ![Image Alt](https://www.woodgears.ca/workshop/jacques/004.jpg)
@@ -18,13 +19,17 @@ If you want to make use of Incremental Builds (you really do) then you'll need t
 
 ---
 
-* Project Description:
+### Project Description:
+
 ... <describe your project>
-* Project Problem:
+### Project Problem:
+
 ... <clear problem description, the cause for this project>
-* Solution:
+### Solution:
+
 ... <describe solution your project has taken>
-* Stability:
+### Stability:
+
 Choose one:
 [Experimental, Stable, Legacy, Deprecate]
 
