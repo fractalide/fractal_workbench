@@ -10,12 +10,9 @@ Typically we refer to this repository as a `frac`. It's like a library or module
 workbench_nand = callPackage ./workbench/nand {};
 workbench_test = callPackage ./workbench/test {};
 ```
-You're encouraged to make this repo your own and put it under new version control. It contains 1 rust component, 1 subnet and 1 contract and some `utils` stuff to automate the creation of new components. We're still developing a spiffy terminal based graph editor that'll really make it a lot simpler to design things. Till then python scripts will have to suffice!
 
-We encourage you to use [Mozilla Public License v2](LICENSE) for your project. This makes it very easy for the community to mix and match components, this is key to our success as a community.
-We also encourage you to use the [C4](CONTRIBUTING.md) to govern your project, having the same governance across projects means patches will fly fast and efficiently. It would be really nice if everyone was tuned to the same note before we start this symphony!
-
-Feel free to take this code and do what you will with it, even if it means close source it.
+You're encouraged to use [Mozilla Public License v2](LICENSE) for your project. This makes it very easy for the community to mix and match components, and is key to our success as a community.
+We also encourage you to use the [C4](CONTRIBUTING.md) to govern your project, having the same governance across projects means high quality patches will fly fast and efficiently. It would be really nice if everyone was tuned to the same note before we start this symphony!
 
 If you want to make use of Incremental Builds (you really do) then you'll need to plug this project into a clone of Fractalide and build from within the Fractalide folder. See Fractalide's [README.md](https://github.com/fractalide/fractalide) for more details
 
