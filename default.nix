@@ -6,7 +6,7 @@
   , fractalide_user ? null
   , config_file ? null}:
 let
-  exeSubnet = fractalComponents.demo_encrypt; # <-- change only me!
+  exeSubnet = fractalComponents.workbench; # <-- change only me!
   publicNamespace = { components = fractalComponents; contracts = fractalContracts; };
   fractalContracts = import ./contracts {inherit pkgs support allContracts;};
   fractalComponents = import ./components {inherit pkgs support allContracts allComponents;};
