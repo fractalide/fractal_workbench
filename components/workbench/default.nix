@@ -1,26 +1,34 @@
 { stdenv
   , buildFractalideSubnet
-  , generic_text
   , net_http_components
   , net_http_contracts
+  , app_todo_components
+  , app_todo_contracts
   , ...}:
 
 buildFractalideSubnet rec {
    src = ./.;
    subnet = ''
-   net_http(${net_http_components.http})
-   '${net_http_contracts.address}:(address="0.0.0.0:8000")' -> listen net_http()
+   http(${net_http_components.http})
 
-   '${generic_text}:(text="Hello world")' -> option world(${net_http_components.raw_text})
-   '${generic_text}:(text="Hello fractalide")' -> option fractalide(${net_http_components.raw_text})
-   '${generic_text}:(text="Hello fractalide with ID")' -> option fractalideID(${net_http_components.raw_text})
-   '${generic_text}:(text="Hello fractalide with Post!")' -> option fractalideP(${net_http_components.raw_text})
+   '${net_http_contracts.address}:(address="0.0.0.0:8000")' -> listen http()
 
-   net_http() GET[^/$] -> input world() output -> response net_http()
-   net_http() GET[^/frac] -> input fractalide() output -> response net_http()
-   net_http() GET[^/frac/.+] -> input fractalideID() output -> response net_http()
+   // GET
+   http() GET[/todos/.+] -> input get(${app_todo_components.get}) response ->
+       response http()
 
-   net_http() POST[/frac] -> input fractalideP() output -> response net_http()
+   // POST
+   http() POST[/todos/?] -> input post(${app_todo_components.post}) response ->
+       response http()
+
+   // DELETE
+   http() DELETE[/todos/.+] -> input delete(${app_todo_components.delete}) response ->
+        response http()
+
+   // PATCH
+   http() PATCH[/todos/.+] -> input patch(${app_todo_components.patch})
+   http() PUT[/todos/.+] -> input patch() response ->
+       response http()
    '';
 
    meta = with stdenv.lib; {
