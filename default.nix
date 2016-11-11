@@ -5,6 +5,7 @@
   , contracts ? fractalide.contracts
   , components ? fractalide.components
 }:
+with pkgs.lib;
 let
   cfg = pkgs.config.services.fratalide_workbench;
   fractalContracts = import ./contracts {inherit pkgs support allContracts;};
