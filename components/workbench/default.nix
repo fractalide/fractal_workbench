@@ -1,7 +1,6 @@
 { stdenv
   , buildFractalideSubnet
   , net_http_components
-  , net_http_contracts
   , app_todo_components
   , app_todo_contracts
   , ...}:
@@ -11,7 +10,7 @@ buildFractalideSubnet rec {
    subnet = ''
    http(${net_http_components.http})
 
-   '${net_http_contracts.address}:(address="0.0.0.0:8000")' -> listen http()
+   listen => listen http()
 
    // GET
    http() GET[/todos/.+] -> input get(${app_todo_components.get}) response ->
