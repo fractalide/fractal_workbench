@@ -1,17 +1,17 @@
 { stdenv
   , buildFractalideSubnet
-  , maths_boolean_print
-  , maths_boolean_nand
-  , workbench_boolean
-  , encrypt
+  , net_http_contracts
+  , workbench
+  , path
   , ...}:
 
 buildFractalideSubnet rec {
    src = ./.;
    subnet = ''
-   '${workbench_boolean}:(boolean=true)' -> a nand(${encrypt maths_boolean_nand}) output -> input io_print(${maths_boolean_print})
-   '${workbench_boolean}:(boolean=true)' -> b nand()
+   '${net_http_contracts.address}:(address="127.0.0.1:8000")' -> listen workbench(${workbench})
+   '${path}:(path="${builtins.getEnv "HOME"}/todos.db")' -> db_path workbench()
    '';
+
    meta = with stdenv.lib; {
     description = "Subnet: Counter app";
     homepage = https://github.com/fractalide/fractalide/tree/master/components/development/test;

@@ -4,7 +4,7 @@
   , support ? fractalide.support
   , contracts ? fractalide.contracts
   , components ? fractalide.components
-  , subnet ? "test" #<--- change only me
+  , subnet ? "test" #<- this is your test component, only change this line
 }:
 let
   isValidSubnet = (builtins.head (pkgs.lib.attrVals [subnet] fractalComponents));
