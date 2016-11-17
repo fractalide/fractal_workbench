@@ -13,7 +13,7 @@ let
   fractalComponents = import ./components {inherit pkgs support allContracts allComponents;};
   allContracts = contracts // fractalContracts;
   allComponents = components // fractalComponents;
-  plugMeIntoFractalide = { components = fractalComponents; contracts = fractalContracts; };
+  plugMeIntoFractalide = { components = fractalComponents; contracts = fractalContracts; service = ./service.nix;};
   fvm = import (<fractalide> + "/support/fvm/") {inherit pkgs support;
     contracts = contracts;
     components = components;
