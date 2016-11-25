@@ -14,7 +14,7 @@ let
     name = "workbench_service";
     subnet = ''
     '${contracts.net_http_contracts.address}:(address="${cfg.bindAddress}:${toString cfg.port}")' -> listen workbench(${fractal.components.workbench})
-    '${contracts.path}:(path="${cfg.dbPath}/${cfg.dbName}")' -> db_path workbench()
+    '${contracts.path}:(path="${cfg.dataDir}/${cfg.dbName}")' -> db_path workbench()
     '';
   };
   fvm = import (<fractalide> + "/support/fvm/") {inherit pkgs support contracts components;};
@@ -54,7 +54,7 @@ in
       default = "todos.db";
       description = "the database file name.";
     };
-    dbPath = mkOption {
+    dataDir = mkOption {
       type = types.path;
       default = "/var/fractalide/workbench";
       description = "The DB will be written to this directory, with the filename specified using the 'dbName' configuration.";
@@ -82,8 +82,11 @@ in
       before = [ "workbench.service" ];
       serviceConfig.Type = "oneshot";
       script = ''
-        install -d -m0700 -o ${cfg.user} ${cfg.dbPath}
-        chown -R ${cfg.user} ${cfg.dbPath}
+        if ! test -e ${cfg.dataDir}/${cfg.dbName}; then
+          mkdir -m 0700 -p ${cfg.dataDir}
+          ${pkgs.sqlite.bin}/bin/sqlite3 ${cfg.dataDir}/${cfg.dbName} 'CREATE TABLE `todos` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `ip` BLOB)'
+          chown -R ${cfg.user} ${cfg.dataDir}
+        fi
       '';
     };
     systemd.services.workbench = {
