@@ -4,20 +4,20 @@ let
   cfg = config.services.workbench;
   fractalide = import <fractalide> {};
   support = fractalide.support;
-  contracts = fractalide.contracts;
-  components = fractalide.components;
-  fractal = import ./default.nix { inherit pkgs support contracts components;
+  edges = fractalide.edges;
+  nodes = fractalide.nodes;
+  fractal = import ./default.nix { inherit pkgs support edges nodes;
     fractalide = null;
   };
-  serviceSubnet = support.buildFractalideSubnet rec {
+  serviceSubgraph = support.subgraph rec {
     src = ./.;
     name = "workbench_service";
     subnet = ''
-    '${contracts.net_http_contracts.address}:(address="${cfg.bindAddress}:${toString cfg.port}")' -> listen workbench(${fractal.components.workbench})
-    '${contracts.path}:(path="${cfg.dataDir}/${cfg.dbName}")' -> db_path workbench()
+    '${edges.net_http_edges.address}:(address="${cfg.bindAddress}:${toString cfg.port}")' -> listen workbench(${fractal.nodes.workbench})
+    '${edges.path}:(path="${cfg.dataDir}/${cfg.dbName}")' -> db_path workbench()
     '';
   };
-  fvm = import (<fractalide> + "/support/fvm/") {inherit pkgs support contracts components;};
+  fvm = import (<fractalide> + "/support/fvm/") {inherit pkgs support edges nodes;};
 in
 {
   options.services.workbench = {
