@@ -10,6 +10,7 @@ subgraph {
   clone() clone[3] -> db_path delete(${app_todo_nodes.todo_delete})
   clone() clone[4] -> db_path patch(${app_todo_nodes.todo_patch})
 
+  http() GET[^/halt] -> halt http()
   http() GET[/todos/.+] -> input get() response -> response http()
   http() POST[/todos/?] -> input post() response -> response http()
   http() DELETE[/todos/.+] -> input delete() response -> response http()
