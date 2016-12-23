@@ -4,7 +4,7 @@ subgraph {
   src = ./.;
   flowscript = with nodes; with edges; ''
   listen => listen http(${net_http_nodes.http})
-  db_path => input clone(${ip_clone})
+  db_path => input clone(${msg_clone})
   clone() clone[1] -> db_path get(${app_todo_nodes.todo_get})
   clone() clone[2] -> db_path post(${app_todo_nodes.todo_post})
   clone() clone[3] -> db_path delete(${app_todo_nodes.todo_delete})
