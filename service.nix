@@ -3,27 +3,23 @@ with lib;
 let
   cfg = config.services.workbench;
   fractalide = import <fractalide> {};
-  support = fractalide.support;
-  edges = fractalide.edges;
-  nodes = fractalide.nodes;
-  fractal = import ./default.nix { inherit pkgs support edges nodes;
-    fractalide = null;
-  };
-  serviceSubgraph = support.subgraph rec {
+  buffet = fractalide.buffet;
+  fractal = import ./default.nix { inherit buffet; fractalide = null; };
+  serviceSubgraph = buffet.support.subgraph {
     src = ./.;
     name = "workbench_service";
-    subnet = ''
-    '${edges.net_http_edges.address}:(address="${cfg.bindAddress}:${toString cfg.port}")' -> listen workbench(${fractal.nodes.workbench})
-    '${edges.path}:(path="${cfg.dataDir}/${cfg.dbName}")' -> db_path workbench()
+    flowscript = with buffet.edges; with buffet.nodes; ''
+      '${net_http_edges.net_http_address}:(address="${cfg.bindAddress}:${toString cfg.port}")' -> listen workbench(${fractal.nodes.workbench})
+      '${fs_path}:(path="${cfg.dataDir}/${cfg.dbName}")' -> db_path workbench()
     '';
   };
-  fvm = import (<fractalide> + "/support/fvm/") {inherit pkgs support edges nodes;};
+  fvm = import (<fractalide> + "/support/fvm/") { inherit buffet; };
 in
 {
   options.services.workbench = {
     enable = mkEnableOption "Fractalide Workbench Example";
     package = mkOption {
-      default = serviceSubnet;
+      default = serviceSubgraph;
       defaultText = "fractalComponents.workbench";
       type = types.package;
       description = ''
