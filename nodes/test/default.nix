@@ -1,9 +1,12 @@
-{ subgraph, nodes, edges }:
+{ subgraph, imsgs, nodes, edges }:
 
-subgraph {
+subgraph rec {
   src = ./.;
+  imsg = imsgs {
+    edges = with edges; [ NetHttpEdges.NetHttpAddress FsPath];
+  };
   flowscript = with nodes; with edges; ''
-  '${net_http_edges.net_http_address}:(address="127.0.0.1:8000")' -> listen workbench(${workbench})
-  '${fs_path}:(path="${builtins.getEnv "HOME"}/todos.db")' -> db_path workbench()
+  '${imsg}.NetHttpAddress:(address="127.0.0.1:8000")' -> listen workbench(${workbench})
+  '${imsg}.FsPath:(path="${builtins.getEnv "HOME"}/todos.db")' -> db_path workbench()
   '';
 }

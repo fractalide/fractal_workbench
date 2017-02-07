@@ -69,7 +69,7 @@ in
     };
     users.extraUsers.workbench = {
       name = cfg.user;
-      #uid = config.ids.uids.workbench;
+      uid = config.ids.uids.workbench;
       description = "Workbench database user";
     };
     systemd.services.workbench_init = {
