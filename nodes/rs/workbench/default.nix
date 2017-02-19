@@ -2,7 +2,7 @@
 
 subgraph {
   src = ./.;
-  flowscript = with nodes; ''
+  flowscript = with nodes.rs; ''
   listen => listen http(${net_http_nodes.http})
   db_path => input clone(${msg_clone})
   clone() clone[1] -> db_path get(${app_todo_nodes.todo_get})

@@ -11,7 +11,7 @@ let
 in
 subgraph {
   src = ./.;
-  flowscript = with nodes; with edges; ''
+  flowscript = with nodes.rs; ''
   '${NetHttpAddress}' -> listen workbench(${workbench})
   '${FsPath}' -> db_path workbench()
   '';
