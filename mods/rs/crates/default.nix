@@ -1,28 +1,28 @@
-{ mkRustCrate, fetchzip, release, verbose }:
+{ build-rust-package, pkgs, release, verbose }:
 let
-    all_crates_1_1_1_ = { dependencies?[], features?[] }: mkRustCrate {
+    all_crates_1_1_1_ = { dependencies?[], features?[] }: build-rust-package {
       crateName = "all_crates";
       version = "1.1.1";
       fractalType = "crate";
       src = ./.;
       inherit dependencies features release verbose;
     };
-    libc_0_2_30_ = { dependencies?[], features?[] }: mkRustCrate {
+    libc_0_2_30_ = { dependencies?[], features?[] }: build-rust-package {
       crateName = "libc";
       version = "0.2.30";
       fractalType = "crate";
-      src = fetchzip {
+      src = pkgs.fetchzip {
         url = "https://crates.io/api/v1/crates/libc/0.2.30/download";
         sha256 = "1c4gi6r5gbpbw3dmryc98x059awl4003cfz5kd6lqm03gp62wlkw";
         name = "libc-0.2.30.tar.gz";
       };
       inherit dependencies features release verbose;
     };
-    memchr_1_0_1_ = { dependencies?[], features?[] }: mkRustCrate {
+    memchr_1_0_1_ = { dependencies?[], features?[] }: build-rust-package {
       crateName = "memchr";
       version = "1.0.1";
       fractalType = "crate";
-      src = fetchzip {
+      src = pkgs.fetchzip {
         url = "https://crates.io/api/v1/crates/memchr/1.0.1/download";
         sha256 = "071m5y0zm9p1k7pzqm20f44ixvmycf71xsrpayqaypxrjwchnkxm";
         name = "memchr-1.0.1.tar.gz";
@@ -30,11 +30,11 @@ let
       libName = "memchr";
       inherit dependencies features release verbose;
     };
-    nom_3_2_0_ = { dependencies?[], features?[] }: mkRustCrate {
+    nom_3_2_0_ = { dependencies?[], features?[] }: build-rust-package {
       crateName = "nom";
       version = "3.2.0";
       fractalType = "crate";
-      src = fetchzip {
+      src = pkgs.fetchzip {
         url = "https://crates.io/api/v1/crates/nom/3.2.0/download";
         sha256 = "16ccwwqi09ai1yf71gpqhih915m7ixyrwbjf6lmhfdnxp0igg6sw";
         name = "nom-3.2.0.tar.gz";

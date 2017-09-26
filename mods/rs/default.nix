@@ -1,8 +1,8 @@
 { buffet }:
 let
+  mkRustCrate = buffet.support.rs.build-rust-package;
+  pkgs = buffet.pkgs;
   verbose = buffet.verbose;
   release = buffet.release;
-  fetchzip = buffet.pkgs.fetchzip;
-  mkRustCrate = buffet.support.rs.mkRustCrate;
 in
-import ./crates { inherit mkRustCrate fetchzip release verbose; }
+import ./crates { inherit build-rust-package pkgs release verbose; }
